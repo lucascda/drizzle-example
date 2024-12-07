@@ -1,9 +1,11 @@
 {
   "name": "drizzle-tutorial",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx --watch src/index.ts",
+    "build": "rimraf dist && tsup src/index.ts --format cjs,esm --dts --minify"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +14,8 @@
   "dependencies": {
     "drizzle-orm": "^0.37.0",
     "express": "^4.21.2",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
