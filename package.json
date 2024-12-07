@@ -1,0 +1,27 @@
+{
+  "name": "drizzle-tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "drizzle-orm": "^0.37.0",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.29.1",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
