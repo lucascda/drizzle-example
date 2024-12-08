@@ -5,7 +5,10 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "start:dev": "tsx --watch src/index.ts",
-    "build": "rimraf dist && tsup src/index.ts --format cjs,esm --dts --minify"
+    "build": "rimraf dist && tsup src/index.ts --format cjs,esm --dts --minify",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
