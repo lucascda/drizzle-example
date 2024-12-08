@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
-import { createServer } from "http";
 import "dotenv/config";
+import express, { NextFunction, Request, Response } from "express";
+import { createServer } from "http";
 import { db, todos } from "./db";
+import { errorHandler } from "./utils";
 
 const app = express();
 
@@ -43,8 +44,27 @@ app.delete("/api/v1/todos/:id", (req: Request, res: Response) => {
   res.send("DELETE TODO BY ID");
 });
 
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  errorHandler.handle(err, res);
+});
+
 const server = createServer(app);
 const port = process.env.PORT ?? 8080;
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error({ promise, reason });
+});
+
+process.on("uncaughtException", (error) => {
+  console.error({ error }, "Uncaught Exception");
+
+  server.close(() => {
+    console.info("Server closed");
+    process.exit(1);
+  });
+
+  setTimeout(() => process.exit(1), 10000).unref();
 });
