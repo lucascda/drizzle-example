@@ -24,6 +24,8 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "pg": "^8.13.1",
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0",
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
@@ -35,6 +37,8 @@
     "@types/helmet": "^0.0.48",
     "@types/node": "^22.10.1",
     "@types/pg": "^8.11.10",
+    "@types/pino": "^7.0.4",
+    "@types/pino-http": "^5.8.4",
     "drizzle-kit": "^0.29.1",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",

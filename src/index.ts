@@ -2,18 +2,33 @@ import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import { createServer } from "http";
 import { db, todos } from "./db";
-import { errorHandler } from "./utils";
+import { errorHandler, logger as pino } from "./utils";
 import { eq } from "drizzle-orm";
 import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import { pinoHttp } from "pino-http";
+import { randomUUID } from "crypto";
 
 const app = express();
+const logger = pinoHttp({
+  logger: pino,
+  genReqId: function (req: Request, res: Response) {
+    const existingId = req.id ?? req.headers["x-request-id"];
+    if (existingId) {
+      return existingId;
+    }
+    const id = randomUUID();
+    res.setHeader("x-request-id", id);
+    return id;
+  },
+});
 app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+app.use(logger);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
@@ -32,6 +47,7 @@ app.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await db.select().from(todos);
+      req.log.info({ result });
       res.json(result);
     } catch (error) {
       next(error);
