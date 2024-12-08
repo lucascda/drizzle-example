@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { createServer } from "http";
 import { db, todos } from "./db";
 import { errorHandler } from "./utils";
+import { eq } from "drizzle-orm";
 
 const app = express();
 
@@ -30,9 +31,20 @@ app.get(
   }
 );
 
-app.get("/api/v1/todos/:id", (req: Request, res: Response) => {
-  res.send("GET TODO BY ID");
-});
+app.get(
+  "/api/v1/todos/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await db
+        .select()
+        .from(todos)
+        .where(eq(todos.id, req.params.id));
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 app.post("/api/v1/todos", (req: Request, res: Response) => {
   res.send("POST CREATE TODO");

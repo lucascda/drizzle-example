@@ -31,7 +31,7 @@ Content-Type: {{contentType}}
 
 ###
 
-GET {{baseUrl}}/todos/1
+GET {{baseUrl}}/todos/33e4c512-2cbc-47c3-ac40-d75b415fd20e
 Content-Type: {{contentType}}
 
 ###
