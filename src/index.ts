@@ -18,15 +18,17 @@ app.get("/healthcheck", (req: Request, res: Response) => {
   }
 });
 
-app.get("/api/v1/todos", async (req: Request, res: Response) => {
-  try {
-    const result = await db.select().from(todos);
-    res.json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send();
+app.get(
+  "/api/v1/todos",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await db.select().from(todos);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 app.get("/api/v1/todos/:id", (req: Request, res: Response) => {
   res.send("GET TODO BY ID");
