@@ -8,6 +8,7 @@
     "build": "rimraf dist && tsup src/index.ts --format cjs,esm --dts --minify",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
     "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
