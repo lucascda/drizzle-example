@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - "5430:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=todos
+    volumes:
+      - "./data:/var/lib/postgresql/data"

@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express";
 import { createServer } from "http";
+import "dotenv/config";
+import { db } from "./db/db";
+import { todos } from "./db/schema";
 
 const app = express();
 
@@ -15,8 +18,14 @@ app.get("/healthcheck", (req: Request, res: Response) => {
   }
 });
 
-app.get("/api/v1/todos", (req: Request, res: Response) => {
-  res.send("GET TODOS");
+app.get("/api/v1/todos", async (req: Request, res: Response) => {
+  try {
+    const result = await db.select().from(todos);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send();
+  }
 });
 
 app.get("/api/v1/todos/:id", (req: Request, res: Response) => {
@@ -36,7 +45,7 @@ app.delete("/api/v1/todos/:id", (req: Request, res: Response) => {
 });
 
 const server = createServer(app);
-const port = 3000;
+const port = process.env.PORT ?? 8080;
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
